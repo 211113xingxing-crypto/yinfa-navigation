@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = getCemeteryById(parseInt(id));
   const city = getCityByPinyin(pinyin);
   if (!c || !city) return { title: "未找到" };
-  return { title: `${c.name} - ${city.name}墓地 - 银发指南`, description: c.description || `${c.name}位于${c.address}` };
+  return { title: `${c.name} - ${city.name}墓地陵园 | ¥${c.priceMin.toLocaleString()}-${c.priceMax.toLocaleString()} - 银发指南`, description: c.description || `${c.name}位于${c.address}，墓型包括${c.plotTypes.join("、")}。` };
 }
 
 export default async function CemeteryDetailPage({ params }: Props) {
@@ -20,25 +20,58 @@ export default async function CemeteryDetailPage({ params }: Props) {
   if (!c || !city) notFound();
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-6">
-      <Link href={`/city/${pinyin}`} className="text-sm text-gray-400 hover:text-[#1a5f4a] mb-4 inline-block">← 返回{city.name}</Link>
-      <h1 className="text-2xl font-bold text-gray-900 mb-2">{c.name}</h1>
-      {c.description && <p className="text-gray-600 mb-6 leading-relaxed">{c.description}</p>}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
-        <InfoItem label="价格区间" value={`¥${c.priceMin.toLocaleString()} - ¥${c.priceMax.toLocaleString()}`} highlight />
-        <InfoItem label="联系电话" value={c.phone || "暂无"} />
-        <InfoItem label="地址" value={c.address} />
+    <div className="max-w-4xl mx-auto px-5 py-8">
+      <nav className="flex items-center gap-2 text-sm text-text-secondary/60 mb-6">
+        <Link href="/" className="hover:text-sage-600 transition-colors">首页</Link>
+        <span>/</span>
+        <Link href={`/city/${pinyin}`} className="hover:text-sage-600 transition-colors">{city.name}</Link>
+        <span>/</span>
+        <span className="text-text">墓地陵园</span>
+      </nav>
+
+      <div className="bg-surface border border-border rounded-2xl p-6 md:p-8 mb-6">
+        <div className="flex items-start justify-between flex-wrap gap-4">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-3xl">🪦</span>
+              <h1 className="text-2xl md:text-3xl font-bold text-text">{c.name}</h1>
+            </div>
+          </div>
+          <div className="text-right">
+            <div className="text-sm text-text-secondary mb-1">参考价格</div>
+            <div className="text-2xl md:text-3xl font-bold text-warm-500">
+              ¥{c.priceMin.toLocaleString()} - ¥{c.priceMax.toLocaleString()}
+            </div>
+          </div>
+        </div>
+        {c.description && (
+          <p className="mt-5 pt-5 border-t border-border text-text-secondary leading-relaxed">{c.description}</p>
+        )}
       </div>
-      <div className="bg-white border border-gray-200 rounded-lg p-4 mb-6">
-        <h2 className="font-semibold mb-2">🪦 墓型选择</h2>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+        <InfoTile label="价格区间" value={`¥${c.priceMin.toLocaleString()} - ¥${c.priceMax.toLocaleString()}`} icon="💰" highlight />
+        <InfoTile label="联系电话" value={c.phone || "暂无"} icon="📞" />
+        <InfoTile label="地址" value={c.address} icon="📍" />
+      </div>
+
+      <div className="bg-surface border border-border rounded-2xl p-5 mb-6">
+        <h2 className="font-semibold text-text mb-3 flex items-center gap-2"><span>🪦</span> 可选墓型</h2>
         <div className="flex flex-wrap gap-2">
-          {c.plotTypes.map((t) => <span key={t} className="text-xs bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full">{t}</span>)}
+          {c.plotTypes.map((t) => (
+            <span key={t} className="text-sm bg-warm-50 text-warm-700 px-3 py-1.5 rounded-full border border-warm-200">{t}</span>
+          ))}
         </div>
       </div>
     </div>
   );
 }
 
-function InfoItem({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
-  return <div className="bg-white border border-gray-200 rounded-lg p-3"><div className="text-xs text-gray-400 mb-1">{label}</div><div className={`text-sm font-medium ${highlight ? "text-[#f0a261]" : "text-gray-900"}`}>{value}</div></div>;
+function InfoTile({ label, value, icon, highlight }: { label: string; value: string; icon: string; highlight?: boolean }) {
+  return (
+    <div className={`bg-surface border rounded-xl p-4 ${highlight ? "border-warm-200 bg-warm-50/30" : "border-border"}`}>
+      <div className="flex items-center gap-2 mb-1.5"><span className="text-base">{icon}</span><span className="text-xs text-text-secondary">{label}</span></div>
+      <div className={`text-sm font-semibold ${highlight ? "text-warm-700" : "text-text"}`}>{value}</div>
+    </div>
+  );
 }
