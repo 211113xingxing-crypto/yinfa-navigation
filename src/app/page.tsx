@@ -1,28 +1,35 @@
 import Link from "next/link";
 import { cities } from "@/lib/data";
 
-const hotCityNames = ["上海", "北京", "广州", "成都", "杭州", "武汉"];
-const hotCities = cities.filter((c) => hotCityNames.includes(c.name));
+type CityStyle = { emoji: string; gradient: string; textColor: string };
+const cityStyles: Record<string, CityStyle> = {
+  "上海": { emoji: "🌃", gradient: "from-blue-400 to-indigo-600", textColor: "text-white" },
+  "北京": { emoji: "🏯", gradient: "from-red-400 to-amber-600", textColor: "text-white" },
+  "广州": { emoji: "🌆", gradient: "from-cyan-400 to-teal-600", textColor: "text-white" },
+  "成都": { emoji: "🐼", gradient: "from-emerald-400 to-green-700", textColor: "text-white" },
+  "杭州": { emoji: "🏞️", gradient: "from-teal-300 to-cyan-600", textColor: "text-white" },
+  "武汉": { emoji: "🌉", gradient: "from-orange-400 to-rose-500", textColor: "text-white" },
+  "重庆": { emoji: "🏔️", gradient: "from-purple-400 to-violet-700", textColor: "text-white" },
+  "南京": { emoji: "🏛️", gradient: "from-amber-400 to-yellow-600", textColor: "text-white" },
+  "天津": { emoji: "🎡", gradient: "from-sky-400 to-blue-700", textColor: "text-white" },
+  "沈阳": { emoji: "🏭", gradient: "from-gray-400 to-slate-700", textColor: "text-white" },
+};
 
 export default function HomePage() {
   return (
     <div>
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-sage-600 via-sage-700 to-sage-800 text-white">
-        <div className="absolute inset-0 z-0 opacity-10" style={{
-          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)",
-          backgroundSize: "24px 24px"
+        <div className="absolute inset-0 z-0 opacity-5" style={{
+          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px)",
+          backgroundSize: "28px 28px"
         }} />
-        <div className="relative z-10 max-w-4xl mx-auto px-5 py-24 md:py-32 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm px-4 py-1.5 rounded-full mb-6 border border-white/10">
-            <span>🌿</span>
-            <span>为银发家庭提供可靠参考</span>
-          </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight leading-tight">
+        <div className="relative z-10 max-w-4xl mx-auto px-5 py-28 md:py-36 text-center">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 tracking-tight leading-tight">
             为父母找到<span className="text-warm-300">安心</span>的选择
           </h1>
           <p className="text-lg text-sage-100/80 max-w-xl mx-auto mb-10 leading-relaxed">
-            一站式查询全国养老机构、殡仪馆、墓地信息，人工核实，数据可靠。
+            一站式查询全国养老机构、殡仪馆、墓地信息
           </p>
           <form action="/search" className="max-w-2xl mx-auto">
             <div className="flex bg-white rounded-2xl shadow-2xl shadow-black/20 overflow-hidden">
@@ -34,73 +41,64 @@ export default function HomePage() {
               <button type="submit" className="bg-warm-500 hover:bg-warm-400 text-white px-8 py-4 font-semibold text-base transition-colors shrink-0">查询</button>
             </div>
           </form>
-          <div className="flex flex-wrap justify-center gap-2.5 mt-5">
-            <Link href="/city/shanghai" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-full transition-colors backdrop-blur-sm">上海养老院</Link>
-            <Link href="/city/beijing" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-full transition-colors backdrop-blur-sm">北京墓地</Link>
-            <Link href="/city/chengdu" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-full transition-colors backdrop-blur-sm">成都殡仪馆</Link>
-            <Link href="/city/hangzhou" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-full transition-colors backdrop-blur-sm">杭州护理院</Link>
-          </div>
-          <div className="flex justify-center gap-12 md:gap-16 text-center mt-12 pt-8 border-t border-white/10">
-            {[
-              { num: "10+", label: "覆盖城市" },
-              { num: "24+", label: "收录机构" },
-              { num: "100%", label: "人工核实" },
-            ].map((s) => (
-              <div key={s.label}>
-                <div className="text-2xl md:text-3xl font-bold text-warm-300">{s.num}</div>
-                <div className="text-sm text-sage-200 mt-1">{s.label}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* Service cards */}
-      <section className="max-w-5xl mx-auto px-5 -mt-10 relative z-10 pb-12">
+      <section className="max-w-5xl mx-auto px-5 -mt-12 relative z-10 pb-16">
         <div className="grid md:grid-cols-2 gap-4">
-          <Link href="/search?q=养老" className="group bg-surface rounded-2xl shadow-md hover:shadow-xl border border-border p-6 md:p-7 transition-all duration-300 hover:-translate-y-1 flex items-start gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-sage-100 flex items-center justify-center text-3xl shrink-0 group-hover:bg-sage-200 transition-colors">🏥</div>
-            <div>
-              <h2 className="text-lg font-bold text-sage-800 mb-1.5">找养老院</h2>
-              <p className="text-sm text-text-secondary leading-relaxed mb-3">对比价格、床位、医疗配套，为父母找到舒适安心的晚年居所。</p>
-              <span className="text-sm font-semibold text-sage-600 group-hover:translate-x-1 transition-transform inline-block">立即查找 →</span>
+          <Link href="/search?q=养老" className="group bg-surface rounded-2xl shadow-md hover:shadow-xl border border-border p-6 md:p-8 transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-sage-100/60 to-transparent rounded-bl-full" />
+            <div className="relative flex items-start gap-5">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center text-3xl shrink-0">🏥</div>
+              <div>
+                <h2 className="text-xl font-bold text-sage-800 mb-2">找养老院</h2>
+                <p className="text-sm text-text-secondary leading-relaxed mb-3">对比价格、床位、医疗配套，为父母找到舒适安心的晚年居所。</p>
+                <span className="text-sm font-semibold text-sage-600 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">立即查找 →</span>
+              </div>
             </div>
           </Link>
-          <Link href="/search?q=殡葬" className="group bg-surface rounded-2xl shadow-md hover:shadow-xl border border-border p-6 md:p-7 transition-all duration-300 hover:-translate-y-1 flex items-start gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-warm-100 flex items-center justify-center text-3xl shrink-0 group-hover:bg-warm-200 transition-colors">🕯️</div>
-            <div>
-              <h2 className="text-lg font-bold text-warm-700 mb-1.5">殡葬服务</h2>
-              <p className="text-sm text-text-secondary leading-relaxed mb-3">查找殡仪馆、墓地，了解流程与风俗，让告别体面而有尊严。</p>
-              <span className="text-sm font-semibold text-warm-500 group-hover:translate-x-1 transition-transform inline-block">立即查找 →</span>
+          <Link href="/search?q=殡葬" className="group bg-surface rounded-2xl shadow-md hover:shadow-xl border border-border p-6 md:p-8 transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-warm-100/60 to-transparent rounded-bl-full" />
+            <div className="relative flex items-start gap-5">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-warm-100 to-warm-200 flex items-center justify-center text-3xl shrink-0">🕯️</div>
+              <div>
+                <h2 className="text-xl font-bold text-warm-700 mb-2">殡葬服务</h2>
+                <p className="text-sm text-text-secondary leading-relaxed mb-3">查找殡仪馆、墓地，了解流程与风俗，让告别体面而有尊严。</p>
+                <span className="text-sm font-semibold text-warm-500 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">立即查找 →</span>
+              </div>
             </div>
           </Link>
         </div>
       </section>
 
-      {/* Hot cities */}
-      <section className="max-w-5xl mx-auto px-5 pb-12">
-        <div className="flex items-center justify-between mb-5">
-          <div>
-            <h2 className="text-xl font-bold text-text">热门城市</h2>
-            <p className="text-sm text-text-secondary mt-0.5">首批覆盖 10 个核心城市</p>
-          </div>
-          <Link href="/search" className="text-sm font-medium text-sage-600 hover:text-sage-700 transition-colors">查看全部 →</Link>
+      {/* City grid */}
+      <section className="max-w-5xl mx-auto px-5 pb-14">
+        <div className="mb-6">
+          <h2 className="text-xl font-bold text-text">选择城市</h2>
+          <p className="text-sm text-text-secondary mt-1">覆盖 10 个核心城市，更多城市持续收录中</p>
         </div>
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-2.5">
-          {hotCities.map((city) => (
-            <Link
-              key={city.id}
-              href={`/city/${city.pinyin}`}
-              className="group bg-surface border border-border rounded-xl overflow-hidden hover:shadow-md hover:border-sage-200 transition-all duration-200 hover:-translate-y-0.5"
-            >
-              <div className="h-20 flex items-center justify-center text-2xl bg-gradient-to-br from-sage-50 to-sage-100 group-hover:from-sage-100 group-hover:to-sage-200 transition-colors">
-                🏙️
-              </div>
-              <div className="p-2.5 text-center">
-                <div className="font-semibold text-text group-hover:text-sage-700 transition-colors text-sm">{city.name}</div>
-              </div>
-            </Link>
-          ))}
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
+          {cities.map((city) => {
+            const style = cityStyles[city.name] || { emoji: "🏙️", gradient: "from-sage-400 to-sage-600", textColor: "text-white" };
+            return (
+              <Link
+                key={city.id}
+                href={`/city/${city.pinyin}`}
+                className="group relative rounded-xl overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+              >
+                {/* Color block top */}
+                <div className={`h-20 bg-gradient-to-br ${style.gradient} flex items-center justify-center text-3xl group-hover:scale-105 transition-transform duration-300`}>
+                  {style.emoji}
+                </div>
+                {/* Label bottom */}
+                <div className="bg-surface border border-t-0 border-border rounded-b-xl px-3 py-2.5 text-center">
+                  <div className={`font-semibold text-sm ${city.tier === "一线" ? "text-sage-800" : "text-text"}`}>{city.name}</div>
+                  <div className="text-xs text-text-secondary/50">{city.province}</div>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
@@ -109,7 +107,7 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-5 py-12 text-center">
           <h2 className="text-xl font-bold mb-2">信息有误？帮助我们完善</h2>
           <p className="text-sage-200/80 mb-5 max-w-md mx-auto text-sm">本站信息均人工核实，如有疏漏，欢迎反馈。</p>
-          <a href="mailto:hi@navi-resources.com" className="inline-flex items-center gap-2 bg-white text-sage-700 px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-warm-50 transition-colors">📧 提交反馈</a>
+          <a href="mailto:hi@navi-resources.com" className="inline-flex items-center gap-2 bg-white text-sage-700 px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-warm-50 transition-colors">📧 提交反馈</a>
         </div>
       </section>
     </div>
