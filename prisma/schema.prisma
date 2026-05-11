@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model City {
+  id               Int           @id @default(autoincrement())
+  name             String        @unique
+  pinyin           String        @unique
+  province         String
+  tier             String
+  population60plus Int?
+  nursingHomes     NursingHome[]
+  funeralHomes     FuneralHome[]
+  cemeteries       Cemetery[]
+}
+
+model NursingHome {
+  id               Int      @id @default(autoincrement())
+  cityId           Int
+  city             City     @relation(fields: [cityId], references: [id])
+  name             String
+  address          String
+  phone            String?
+  priceMin         Int?
+  priceMax         Int?
+  bedCount         Int?
+  bedAvailable     Int?
+  type             String?
+  acceptsDisabled  Boolean  @default(false)
+  medicalInsurance Boolean  @default(false)
+  rating           Float    @default(0)
+  reviewCount      Int      @default(0)
+  lat              Float?
+  lng              Float?
+  status           String   @default("pending")
+  description      String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model FuneralHome {
+  id            Int      @id @default(autoincrement())
+  cityId        Int
+  city          City     @relation(fields: [cityId], references: [id])
+  name          String
+  address       String
+  phone         String?
+  priceRange    String?
+  services      String?
+  businessHours String?
+  lat           Float?
+  lng           Float?
+  status        String   @default("pending")
+  description   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Cemetery {
+  id             Int      @id @default(autoincrement())
+  cityId         Int
+  city           City     @relation(fields: [cityId], references: [id])
+  name           String
+  address        String
+  phone          String?
+  priceMin       Int?
+  priceMax       Int?
+  plotTypes      String?
+  remainingPlots Int?
+  lat            Float?
+  lng            Float?
+  status         String   @default("pending")
+  description    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
