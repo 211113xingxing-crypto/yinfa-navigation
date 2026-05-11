@@ -26,7 +26,7 @@ export default function HomePage() {
         <div className="relative z-10 max-w-4xl mx-auto px-5 py-24 md:py-32 text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm px-4 py-1.5 rounded-full mb-6 border border-white/10">
             <span>🌿</span>
-            <span>用心守护每一个家庭的重要时刻</span>
+            <span>v5 · 为银发家庭提供可靠参考</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight leading-tight">
             为父母找到<span className="text-warm-300">安心</span>的选择
