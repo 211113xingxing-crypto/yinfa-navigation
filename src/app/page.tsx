@@ -12,8 +12,8 @@ const hot = cities.filter(c => ["上海","北京","广州","成都","杭州","�
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sage-50 to-warm-50">
-      <div className="max-w-4xl mx-auto px-4 py-10">
+    <div className="w-full max-w-4xl">
+      <div className="px-4 py-10">
         
         {/* Logo + Title */}
         <div className="text-center mb-10">
