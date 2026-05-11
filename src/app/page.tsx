@@ -16,27 +16,30 @@ export default function HomePage() {
   return (
     <div>
       {/* ---------- Hero ---------- */}
-      <section className="relative overflow-hidden bg-sage-900 text-white">
-        <div className="absolute inset-0">
+      <section className="relative overflow-hidden bg-gradient-to-br from-sage-800 via-sage-700 to-sage-900 text-white">
+        {/* Background image - subtle, behind everything */}
+        <div className="absolute inset-0 z-0">
           <Image
             src="/hero-bg.png"
-            alt="温馨的养老生活场景"
+            alt=""
             fill
-            className="object-cover opacity-40"
+            className="object-cover opacity-20"
             priority
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-sage-900/80 via-sage-900/40 to-transparent" />
         </div>
-        
-        <div className="relative max-w-4xl mx-auto px-5 py-24 md:py-32 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 tracking-tight leading-tight drop-shadow-lg">
+
+        <div className="relative z-10 max-w-4xl mx-auto px-5 py-24 md:py-32 text-center">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm px-4 py-1.5 rounded-full mb-6">
+            <span>🌿</span>
+            <span>用心守护每一个家庭的重要时刻</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 tracking-tight leading-tight">
             为父母找到<span className="text-warm-300">安心</span>的选择
           </h1>
-          <p className="text-lg text-sage-100/90 max-w-xl mx-auto mb-10 leading-relaxed drop-shadow">
+          <p className="text-lg text-sage-100/80 max-w-xl mx-auto mb-10 leading-relaxed">
             覆盖全国养老机构、殡仪馆、墓地信息，人工核实，让每一个重要决定都有据可依。
           </p>
-
           <form action="/search" className="max-w-2xl mx-auto">
             <div className="flex bg-white rounded-2xl shadow-2xl overflow-hidden">
               <div className="flex-1 flex items-center px-5">
@@ -47,7 +50,6 @@ export default function HomePage() {
               <button type="submit" className="bg-warm-500 hover:bg-warm-400 text-white px-8 py-4 font-semibold text-base transition-colors shrink-0">查询</button>
             </div>
           </form>
-
           <div className="flex flex-wrap justify-center gap-2.5 mt-5">
             <Link href="/city/shanghai" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-full transition-colors backdrop-blur-sm">上海养老院</Link>
             <Link href="/city/beijing" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-full transition-colors backdrop-blur-sm">北京墓地</Link>
@@ -57,38 +59,43 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------- Two service cards with real images ---------- */}
+      {/* ---------- Two service cards ---------- */}
       <section className="max-w-7xl mx-auto px-5 -mt-12 relative z-10">
         <div className="grid md:grid-cols-2 gap-5">
           {/* Nursing */}
-          <Link href="/search?q=养老" className="group bg-surface rounded-2xl shadow-lg hover:shadow-xl border border-border overflow-hidden transition-all duration-300 hover:-translate-y-1">
-            <div className="h-40 relative overflow-hidden">
-              <Image src="/nursing-card.png" alt="养老服务" fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 768px) 100vw, 50vw" />
-              <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/30 to-transparent" />
+          <Link href="/search?q=养老" className="group relative bg-surface rounded-2xl shadow-lg hover:shadow-xl border border-border overflow-hidden transition-all duration-300 hover:-translate-y-1">
+            {/* Card bg image - very subtle */}
+            <div className="absolute inset-0 z-0 opacity-15">
+              <Image src="/nursing-card.png" alt="" fill className="object-cover group-hover:opacity-100 transition-opacity duration-500" sizes="50vw" />
             </div>
-            <div className="p-5 md:p-6 -mt-2 relative">
-              <h2 className="text-xl font-bold text-sage-800 mb-2 group-hover:text-sage-700 transition-colors">找养老院</h2>
-              <p className="text-sm text-text-secondary leading-relaxed mb-3">对比价格、床位、医疗配套，为父母找到舒适安心的晚年居所。</p>
-              <span className="text-sm font-semibold text-sage-600 group-hover:translate-x-1 transition-transform inline-block">立即查找 →</span>
+            <div className="relative z-10 p-6 md:p-8 flex items-start gap-5">
+              <div className="w-14 h-14 rounded-2xl bg-sage-100 flex items-center justify-center text-3xl shrink-0">🏥</div>
+              <div>
+                <h2 className="text-xl font-bold text-sage-800 mb-2">找养老院</h2>
+                <p className="text-sm text-text-secondary leading-relaxed mb-3">对比价格、床位、医疗配套，为父母找到舒适安心的晚年居所。</p>
+                <span className="text-sm font-semibold text-sage-600 group-hover:translate-x-1 transition-transform inline-block">立即查找 →</span>
+              </div>
             </div>
           </Link>
 
           {/* Funeral */}
-          <Link href="/search?q=殡葬" className="group bg-surface rounded-2xl shadow-lg hover:shadow-xl border border-border overflow-hidden transition-all duration-300 hover:-translate-y-1">
-            <div className="h-40 relative overflow-hidden">
-              <Image src="/funeral-card.png" alt="殡葬服务" fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 768px) 100vw, 50vw" />
-              <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/30 to-transparent" />
+          <Link href="/search?q=殡葬" className="group relative bg-surface rounded-2xl shadow-lg hover:shadow-xl border border-border overflow-hidden transition-all duration-300 hover:-translate-y-1">
+            <div className="absolute inset-0 z-0 opacity-15">
+              <Image src="/funeral-card.png" alt="" fill className="object-cover group-hover:opacity-100 transition-opacity duration-500" sizes="50vw" />
             </div>
-            <div className="p-5 md:p-6 -mt-2 relative">
-              <h2 className="text-xl font-bold text-warm-700 mb-2 group-hover:text-warm-600 transition-colors">殡葬服务</h2>
-              <p className="text-sm text-text-secondary leading-relaxed mb-3">查找殡仪馆、墓地，了解流程与风俗，让告别体面而有尊严。</p>
-              <span className="text-sm font-semibold text-warm-500 group-hover:translate-x-1 transition-transform inline-block">立即查找 →</span>
+            <div className="relative z-10 p-6 md:p-8 flex items-start gap-5">
+              <div className="w-14 h-14 rounded-2xl bg-warm-100 flex items-center justify-center text-3xl shrink-0">🕯️</div>
+              <div>
+                <h2 className="text-xl font-bold text-warm-700 mb-2">殡葬服务</h2>
+                <p className="text-sm text-text-secondary leading-relaxed mb-3">查找殡仪馆、墓地，了解流程与风俗，让告别体面而有尊严。</p>
+                <span className="text-sm font-semibold text-warm-500 group-hover:translate-x-1 transition-transform inline-block">立即查找 →</span>
+              </div>
             </div>
           </Link>
         </div>
       </section>
 
-      {/* ---------- Hot cities with real images ---------- */}
+      {/* ---------- Hot cities ---------- */}
       <section className="max-w-7xl mx-auto px-5 py-16">
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -105,11 +112,14 @@ export default function HomePage() {
               href={`/city/${city.pinyin}`}
               className="group bg-surface border border-border rounded-xl overflow-hidden hover:shadow-lg hover:border-sage-200 transition-all duration-200 hover:-translate-y-0.5"
             >
-              <div className="h-24 relative overflow-hidden bg-sage-50">
+              <div className="h-24 relative overflow-hidden bg-gradient-to-br from-sage-50 to-sage-100">
                 {cityImages[city.name] ? (
-                  <Image src={cityImages[city.name]} alt={city.name} fill className="object-cover group-hover:scale-110 transition-transform duration-400" sizes="16vw" />
+                  <>
+                    <Image src={cityImages[city.name]} alt={city.name} fill className="object-cover group-hover:scale-105 transition-transform duration-400" sizes="16vw" />
+                    <div className="absolute inset-0 bg-white/5 group-hover:bg-transparent transition-colors" />
+                  </>
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-3xl bg-gradient-to-br from-sage-50 to-sage-100">🏙️</div>
+                  <div className="w-full h-full flex items-center justify-center text-3xl">🏙️</div>
                 )}
               </div>
               <div className="p-3 text-center">
@@ -121,7 +131,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------- How it works ---------- */}
+      {/* ---------- Steps ---------- */}
       <section className="bg-surface border-y border-border">
         <div className="max-w-7xl mx-auto px-5 py-16">
           <h2 className="text-2xl font-bold text-text text-center mb-10">三步找到所需信息</h2>
