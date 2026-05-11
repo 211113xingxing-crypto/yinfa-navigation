@@ -1,13 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
 import { cities } from "@/lib/data";
-
-const cityImages: Record<string, string> = {
-  "上海": "/city-shanghai.png",
-  "北京": "/city-beijing.png",
-  "广州": "/city-guangzhou.png",
-  "成都": "/city-chengdu.png",
-};
 
 const hotCityNames = ["上海", "北京", "广州", "成都", "杭州", "武汉"];
 const hotCities = cities.filter((c) => hotCityNames.includes(c.name));
@@ -15,18 +7,16 @@ const hotCities = cities.filter((c) => hotCityNames.includes(c.name));
 export default function HomePage() {
   return (
     <div>
-      {/* ---------- Hero: clean gradient, no photo ---------- */}
+      {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-sage-600 via-sage-700 to-sage-800 text-white">
-        {/* Subtle dot pattern */}
         <div className="absolute inset-0 z-0 opacity-10" style={{
           backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)",
           backgroundSize: "24px 24px"
         }} />
-
         <div className="relative z-10 max-w-4xl mx-auto px-5 py-24 md:py-32 text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white/90 text-sm px-4 py-1.5 rounded-full mb-6 border border-white/10">
             <span>🌿</span>
-            <span>v5 · 为银发家庭提供可靠参考</span>
+            <span>为银发家庭提供可靠参考</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight leading-tight">
             为父母找到<span className="text-warm-300">安心</span>的选择
@@ -50,8 +40,6 @@ export default function HomePage() {
             <Link href="/city/chengdu" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-full transition-colors backdrop-blur-sm">成都殡仪馆</Link>
             <Link href="/city/hangzhou" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-full transition-colors backdrop-blur-sm">杭州护理院</Link>
           </div>
-
-          {/* Stats bar */}
           <div className="flex justify-center gap-12 md:gap-16 text-center mt-12 pt-8 border-t border-white/10">
             {[
               { num: "10+", label: "覆盖城市" },
@@ -67,10 +55,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------- Two service cards ---------- */}
+      {/* Service cards */}
       <section className="max-w-5xl mx-auto px-5 -mt-10 relative z-10 pb-12">
         <div className="grid md:grid-cols-2 gap-4">
-          {/* Nursing */}
           <Link href="/search?q=养老" className="group bg-surface rounded-2xl shadow-md hover:shadow-xl border border-border p-6 md:p-7 transition-all duration-300 hover:-translate-y-1 flex items-start gap-4">
             <div className="w-14 h-14 rounded-2xl bg-sage-100 flex items-center justify-center text-3xl shrink-0 group-hover:bg-sage-200 transition-colors">🏥</div>
             <div>
@@ -79,8 +66,6 @@ export default function HomePage() {
               <span className="text-sm font-semibold text-sage-600 group-hover:translate-x-1 transition-transform inline-block">立即查找 →</span>
             </div>
           </Link>
-
-          {/* Funeral */}
           <Link href="/search?q=殡葬" className="group bg-surface rounded-2xl shadow-md hover:shadow-xl border border-border p-6 md:p-7 transition-all duration-300 hover:-translate-y-1 flex items-start gap-4">
             <div className="w-14 h-14 rounded-2xl bg-warm-100 flex items-center justify-center text-3xl shrink-0 group-hover:bg-warm-200 transition-colors">🕯️</div>
             <div>
@@ -92,7 +77,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------- Hot cities ---------- */}
+      {/* Hot cities */}
       <section className="max-w-5xl mx-auto px-5 pb-12">
         <div className="flex items-center justify-between mb-5">
           <div>
@@ -101,7 +86,6 @@ export default function HomePage() {
           </div>
           <Link href="/search" className="text-sm font-medium text-sage-600 hover:text-sage-700 transition-colors">查看全部 →</Link>
         </div>
-
         <div className="grid grid-cols-3 md:grid-cols-6 gap-2.5">
           {hotCities.map((city) => (
             <Link
@@ -109,12 +93,8 @@ export default function HomePage() {
               href={`/city/${city.pinyin}`}
               className="group bg-surface border border-border rounded-xl overflow-hidden hover:shadow-md hover:border-sage-200 transition-all duration-200 hover:-translate-y-0.5"
             >
-              <div className="h-20 relative overflow-hidden bg-gradient-to-br from-sage-50 to-sage-100">
-                {cityImages[city.name] ? (
-                  <Image src={cityImages[city.name]} alt={city.name} fill className="object-cover group-hover:scale-105 transition-transform duration-400" sizes="16vw" />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-2xl">🏙️</div>
-                )}
+              <div className="h-20 flex items-center justify-center text-2xl bg-gradient-to-br from-sage-50 to-sage-100 group-hover:from-sage-100 group-hover:to-sage-200 transition-colors">
+                🏙️
               </div>
               <div className="p-2.5 text-center">
                 <div className="font-semibold text-text group-hover:text-sage-700 transition-colors text-sm">{city.name}</div>
@@ -124,7 +104,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------- CTA ---------- */}
+      {/* CTA */}
       <section className="bg-sage-700 text-white">
         <div className="max-w-5xl mx-auto px-5 py-12 text-center">
           <h2 className="text-xl font-bold mb-2">信息有误？帮助我们完善</h2>
