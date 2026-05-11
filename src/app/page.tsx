@@ -1,184 +1,154 @@
 import Link from "next/link";
 import { cities } from "@/lib/data";
+import { NursingIllustration, FuneralIllustration } from "@/components/Illustrations";
 
 export default function HomePage() {
-  const hotCities = cities.filter((c) => c.tier === "一线");
-  const newCities = cities.filter((c) => c.tier === "新一线");
+  const hotCities = cities.filter((c) => ["上海", "北京", "广州", "成都", "杭州", "武汉"].includes(c.name));
 
   return (
     <div>
-      {/* ---------- Hero ---------- */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-warm-50 via-warm-50 to-surface">
-        {/* Subtle pattern */}
-        <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_50%_120%,#4a6342_0%,transparent_60%)]" />
-        
-        <div className="relative max-w-7xl mx-auto px-5 py-16 md:py-24 text-center">
-          <div className="inline-flex items-center gap-2 bg-warm-100/80 text-warm-700 text-sm px-4 py-1.5 rounded-full mb-6 backdrop-blur-sm">
-            <span>🌿</span>
-            <span>用心守护每一个家庭的重要时刻</span>
-          </div>
-          
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-sage-800 mb-5 leading-tight tracking-tight">
-            银发指南
+      {/* ---------- Hero with search ---------- */}
+      <section className="relative bg-gradient-to-br from-sage-700 via-sage-800 to-sage-900 text-white overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-64 h-64 rounded-full bg-warm-300 blur-3xl" />
+          <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-sage-300 blur-3xl" />
+        </div>
+        <div className="relative max-w-4xl mx-auto px-5 py-20 md:py-28 text-center">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 tracking-tight leading-tight">
+            为父母找到<span className="text-warm-300">安心</span>的选择
           </h1>
-          <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
-            为父母养老解难，为家人善后分忧。<br />
-            一站式查询全国<strong className="text-sage-700">养老机构</strong>、<strong className="text-sage-700">殡仪馆</strong>和<strong className="text-sage-700">墓地陵园</strong>信息。
+          <p className="text-lg text-sage-200 max-w-xl mx-auto mb-10 leading-relaxed">
+            覆盖全国养老机构、殡仪馆、墓地信息，人工核实，让每一个重要决定都有据可依。
           </p>
 
-          {/* Search bar */}
-          <form action="/search" className="max-w-xl mx-auto flex gap-0 mb-12">
-            <div className="flex-1 relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary/50 text-lg">🔍</span>
-              <input
-                name="q"
-                type="text"
-                placeholder="输入城市名、养老院或服务关键词..."
-                className="w-full pl-11 pr-4 py-3.5 rounded-l-xl border border-border bg-surface text-text placeholder:text-text-secondary/40 focus:outline-none focus:ring-2 focus:ring-sage-300 focus:border-sage-400 transition-shadow text-sm"
-              />
+          {/* Big search */}
+          <form action="/search" className="max-w-2xl mx-auto">
+            <div className="flex bg-white rounded-2xl shadow-2xl overflow-hidden">
+              <div className="flex-1 flex items-center px-5">
+                <span className="text-xl mr-3 shrink-0">🔍</span>
+                <input
+                  name="q"
+                  type="text"
+                  placeholder="输入城市名，如 上海，开始查询..."
+                  className="w-full py-4 text-text bg-transparent placeholder:text-text-secondary/40 text-base focus:outline-none"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-warm-500 hover:bg-warm-400 text-white px-8 py-4 font-semibold text-base transition-colors shrink-0"
+              >
+                查询
+              </button>
             </div>
-            <button
-              type="submit"
-              className="bg-sage-700 text-white px-6 py-3.5 rounded-r-xl text-sm font-semibold hover:bg-sage-600 transition-colors shrink-0 shadow-sm"
-            >
-              搜索
-            </button>
           </form>
 
-          {/* Stats */}
-          <div className="flex justify-center gap-12 md:gap-16 text-center">
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-sage-700">10+</div>
-              <div className="text-sm text-text-secondary mt-1">覆盖城市</div>
-            </div>
-            <div className="w-px bg-border" />
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-sage-700">24+</div>
-              <div className="text-sm text-text-secondary mt-1">收录机构</div>
-            </div>
-            <div className="w-px bg-border" />
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-warm-500">100%</div>
-              <div className="text-sm text-text-secondary mt-1">人工核实</div>
-            </div>
+          {/* Quick tags */}
+          <div className="flex flex-wrap justify-center gap-2.5 mt-5">
+            <Link href="/city/shanghai" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-full transition-colors backdrop-blur-sm">上海养老院</Link>
+            <Link href="/city/beijing" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-full transition-colors backdrop-blur-sm">北京墓地</Link>
+            <Link href="/city/chengdu" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-full transition-colors backdrop-blur-sm">成都殡仪馆</Link>
+            <Link href="/city/hangzhou" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-full transition-colors backdrop-blur-sm">杭州护理院</Link>
           </div>
         </div>
       </section>
 
-      {/* ---------- Service cards ---------- */}
-      <section className="max-w-7xl mx-auto px-5 -mt-8 relative z-10">
+      {/* ---------- Two big service cards ---------- */}
+      <section className="max-w-7xl mx-auto px-5 -mt-12 relative z-10">
         <div className="grid md:grid-cols-2 gap-5">
-          <Link
-            href="/search?q=养老"
-            className="group bg-surface border border-border rounded-2xl p-6 md:p-8 hover:shadow-xl hover:border-sage-200 transition-all duration-300"
-          >
-            <div className="flex items-start gap-5">
-              <div className="w-14 h-14 rounded-2xl bg-sage-50 flex items-center justify-center text-3xl shrink-0 group-hover:bg-sage-100 transition-colors">
-                🏥
+          {/* Nursing */}
+          <Link href="/search?q=养老" className="group bg-surface rounded-2xl shadow-lg hover:shadow-xl border border-border overflow-hidden transition-all duration-300 hover:-translate-y-1">
+            <div className="flex">
+              <div className="w-40 shrink-0 bg-sage-50 p-5 flex items-center justify-center">
+                <NursingIllustration />
               </div>
-              <div>
-                <h2 className="text-xl font-bold text-sage-800 mb-2 group-hover:text-sage-700 transition-colors">
-                  养老服务
-                </h2>
-                <p className="text-sm text-text-secondary leading-relaxed mb-3">
-                  按城市查询养老机构，对比价格、床位数、医疗配套，为父母找到安心舒适的晚年居所。
-                </p>
-                <span className="text-sm font-semibold text-sage-600 group-hover:translate-x-1 transition-transform inline-block">
-                  查找养老院 →
-                </span>
+              <div className="flex-1 p-5 md:p-6 flex flex-col justify-center">
+                <h2 className="text-xl font-bold text-sage-800 mb-2 group-hover:text-sage-700 transition-colors">找养老院</h2>
+                <p className="text-sm text-text-secondary leading-relaxed mb-3">对比价格、床位、医疗配套，为父母找到舒适安心的晚年居所。</p>
+                <span className="text-sm font-semibold text-sage-600 group-hover:translate-x-1 transition-transform inline-block w-fit">立即查找 →</span>
               </div>
             </div>
           </Link>
 
-          <Link
-            href="/search?q=殡葬"
-            className="group bg-surface border border-border rounded-2xl p-6 md:p-8 hover:shadow-xl hover:border-warm-200 transition-all duration-300"
-          >
-            <div className="flex items-start gap-5">
-              <div className="w-14 h-14 rounded-2xl bg-warm-50 flex items-center justify-center text-3xl shrink-0 group-hover:bg-warm-100 transition-colors">
-                🕯️
+          {/* Funeral */}
+          <Link href="/search?q=殡葬" className="group bg-surface rounded-2xl shadow-lg hover:shadow-xl border border-border overflow-hidden transition-all duration-300 hover:-translate-y-1">
+            <div className="flex">
+              <div className="w-40 shrink-0 bg-warm-50 p-5 flex items-center justify-center">
+                <FuneralIllustration />
               </div>
-              <div>
-                <h2 className="text-xl font-bold text-warm-700 mb-2 group-hover:text-warm-600 transition-colors">
-                  殡葬服务
-                </h2>
-                <p className="text-sm text-text-secondary leading-relaxed mb-3">
-                  查找殡仪馆、墓地陵园，了解白事流程与本地风俗，让告别体面而有尊严。
-                </p>
-                <span className="text-sm font-semibold text-warm-500 group-hover:translate-x-1 transition-transform inline-block">
-                  查找殡葬服务 →
-                </span>
+              <div className="flex-1 p-5 md:p-6 flex flex-col justify-center">
+                <h2 className="text-xl font-bold text-warm-700 mb-2 group-hover:text-warm-600 transition-colors">殡葬服务</h2>
+                <p className="text-sm text-text-secondary leading-relaxed mb-3">查找殡仪馆、墓地，了解流程与风俗，让告别体面而有尊严。</p>
+                <span className="text-sm font-semibold text-warm-500 group-hover:translate-x-1 transition-transform inline-block w-fit">立即查找 →</span>
               </div>
             </div>
           </Link>
         </div>
       </section>
 
-      {/* ---------- City grid ---------- */}
+      {/* ---------- Hot cities ---------- */}
       <section className="max-w-7xl mx-auto px-5 py-16">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-sage-800 mb-3">
-            选择城市开始查询
-          </h2>
-          <p className="text-text-secondary text-sm">首批覆盖 10 个核心城市，更多城市持续收录中</p>
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-xl font-bold text-text">热门城市</h2>
+            <p className="text-sm text-text-secondary mt-1">首批覆盖 10 个核心城市</p>
+          </div>
+          <Link href="/search" className="text-sm font-medium text-sage-600 hover:text-sage-700 transition-colors">
+            查看全部 →
+          </Link>
         </div>
 
-        {/* Tier 1 */}
-        <div className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="w-2 h-2 rounded-full bg-sage-600" />
-            <h3 className="text-sm font-semibold text-sage-700 uppercase tracking-wider">一线城市</h3>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            {hotCities.map((city) => (
-              <Link
-                key={city.id}
-                href={`/city/${city.pinyin}`}
-                className="group bg-surface border border-border rounded-xl px-5 py-4 hover:shadow-md hover:border-sage-200 hover:-translate-y-0.5 transition-all duration-200"
-              >
-                <div className="font-semibold text-text group-hover:text-sage-700 transition-colors">
-                  {city.name}
-                </div>
-                <div className="text-xs text-text-secondary/60 mt-1">{city.province}</div>
-              </Link>
-            ))}
-          </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+          {hotCities.map((city) => (
+            <Link
+              key={city.id}
+              href={`/city/${city.pinyin}`}
+              className="group bg-surface border border-border rounded-xl overflow-hidden hover:shadow-lg hover:border-sage-200 transition-all duration-200 hover:-translate-y-0.5"
+            >
+              <div className="h-20 bg-gradient-to-br from-sage-50 to-sage-100 flex items-center justify-center group-hover:from-sage-100 group-hover:to-sage-200 transition-colors">
+                <span className="text-2xl">🏙️</span>
+              </div>
+              <div className="p-3 text-center">
+                <div className="font-semibold text-text group-hover:text-sage-700 transition-colors text-sm">{city.name}</div>
+                <div className="text-xs text-text-secondary/60 mt-0.5">{city.province}</div>
+              </div>
+            </Link>
+          ))}
         </div>
+      </section>
 
-        {/* Tier 2 */}
-        <div>
-          <div className="flex items-center gap-3 mb-4">
-            <span className="w-2 h-2 rounded-full bg-warm-400" />
-            <h3 className="text-sm font-semibold text-warm-700 uppercase tracking-wider">新一线城市</h3>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-            {newCities.map((city) => (
-              <Link
-                key={city.id}
-                href={`/city/${city.pinyin}`}
-                className="group bg-surface border border-border rounded-xl px-5 py-4 hover:shadow-md hover:border-warm-200 hover:-translate-y-0.5 transition-all duration-200"
-              >
-                <div className="font-semibold text-text group-hover:text-warm-700 transition-colors">
-                  {city.name}
-                </div>
-                <div className="text-xs text-text-secondary/60 mt-1">{city.province}</div>
-              </Link>
-            ))}
+      {/* ---------- How it works ---------- */}
+      <section className="bg-surface border-y border-border">
+        <div className="max-w-7xl mx-auto px-5 py-16">
+          <h2 className="text-xl font-bold text-text text-center mb-10">三步找到所需信息</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-sage-50 flex items-center justify-center text-2xl">🔍</div>
+              <h3 className="font-semibold text-text mb-2">搜索城市</h3>
+              <p className="text-sm text-text-secondary">输入城市名，快速定位当地养老和殡葬服务机构。</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-warm-50 flex items-center justify-center text-2xl">📋</div>
+              <h3 className="font-semibold text-text mb-2">对比信息</h3>
+              <p className="text-sm text-text-secondary">查看价格、床位、服务项目，一目了然做出判断。</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-sage-50 flex items-center justify-center text-2xl">📞</div>
+              <h3 className="font-semibold text-text mb-2">直接联系</h3>
+              <p className="text-sm text-text-secondary">每家机构页面都有联系电话，一键拨打咨询。</p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ---------- CTA ---------- */}
-      <section className="bg-sage-700 text-white">
-        <div className="max-w-7xl mx-auto px-5 py-16 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">信息有误？帮助我们完善</h2>
-          <p className="text-sage-200 mb-6 max-w-lg mx-auto text-sm leading-relaxed">
-            本站信息均由人工核实，但难免有疏漏。如果您发现信息错误，欢迎反馈，让更多人受益。
+      <section className="bg-gradient-to-r from-sage-700 to-sage-800 text-white">
+        <div className="max-w-7xl mx-auto px-5 py-14 text-center">
+          <h2 className="text-2xl font-bold mb-3">信息有误？帮助我们完善</h2>
+          <p className="text-sage-200 mb-6 max-w-md mx-auto text-sm">
+            本站信息均人工核实，如有疏漏，欢迎反馈，让更多人受益。
           </p>
-          <a
-            href="mailto:hi@navi-resources.com"
-            className="inline-flex items-center gap-2 bg-white text-sage-700 px-6 py-3 rounded-xl font-semibold text-sm hover:bg-warm-50 transition-colors"
-          >
+          <a href="mailto:hi@navi-resources.com"
+            className="inline-flex items-center gap-2 bg-white text-sage-700 px-6 py-3 rounded-xl font-semibold text-sm hover:bg-warm-50 transition-colors">
             📧 提交反馈
           </a>
         </div>
